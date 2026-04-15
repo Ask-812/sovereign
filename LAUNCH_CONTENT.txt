@@ -1,10 +1,46 @@
 ============================================================
-SOVEREIGN — LAUNCH CONTENT
+SOVEREIGN — LAUNCH CONTENT + MARKETING SETUP
 ============================================================
 Created: April 15, 2026
-Deploy URL: https://startup-ten-cyan.vercel.app
+Live site: https://startup-ten-cyan.vercel.app
+Admin: https://startup-ten-cyan.vercel.app/admin (password: sovereign2026)
 GitHub: https://github.com/Ask-812/sovereign
 ============================================================
+
+
+============================================================
+WHAT ARNAV NEEDS TO DO (I can't do these — they need human verification)
+============================================================
+
+1. CREATE A BRAND EMAIL (5 minutes):
+   - Go to https://proton.me/mail/pricing (free plan)
+   - Create: sovereign.ops@proton.me (or similar)
+   - This email goes nowhere public — it's just for creating accounts
+
+2. CREATE A TWITTER/X ACCOUNT (5 minutes):
+   - Use the Proton email above
+   - Handle: @sovereign_os or @usesovereign or @getsovereign
+   - Display name: "Sovereign"
+   - Bio: "One person. Full company. Zero overhead. The operating system for independent operators."
+   - Profile pic: Purple gradient S logo (screenshot from the site)
+   - Link: your Vercel URL
+
+3. SET UP RESEND FOR EMAILS (3 minutes):
+   - Go to https://resend.com
+   - Sign up with the Proton email
+   - Get API key from dashboard
+   - Add to Vercel: vercel env add RESEND_API_KEY production
+   - (Until you do this, signups work but welcome emails don't send — they fail silently)
+
+4. OPTIONAL — REDDIT ACCOUNT:
+   - Create with Proton email
+   - Username: sovereign_os or similar
+   - Need some karma before posting (comment on a few threads first)
+
+ONCE YOU DO STEPS 1-3, TELL ME:
+   - The Twitter handle
+   - Confirmation that Resend API key is set
+   - I'll then help you compose and schedule posts
 
 
 ------------------------------------------------------------
