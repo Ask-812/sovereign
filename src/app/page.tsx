@@ -513,7 +513,7 @@ function WaitlistSection() {
               </div>
               <div className="flex items-center justify-center gap-4 mt-4">
                 <a
-                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent("Just joined the Sovereign waitlist — the operating system for independent operators. One person. Full company. Zero overhead.\n\n")}&url=${encodeURIComponent(shareUrl)}`}
+                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent("Just joined the @SovereignOSdev waitlist — the operating system for independent operators. One person. Full company. Zero overhead.\n\n")}&url=${encodeURIComponent(shareUrl)}`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-xs text-zinc-500 hover:text-violet-400 transition-colors"
@@ -570,7 +570,7 @@ function Footer() {
           <div className="flex items-center gap-6 text-sm text-zinc-600">
             <a href="/manifesto" className="hover:text-zinc-400 transition-colors">Manifesto</a>
             <a href="https://github.com/Ask-812/sovereign" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-400 transition-colors">GitHub</a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-400 transition-colors">Twitter</a>
+            <a href="https://x.com/SovereignOSdev" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-400 transition-colors">Twitter</a>
           </div>
           <p className="text-xs text-zinc-700">&copy; 2026 Sovereign</p>
         </div>
