@@ -98,15 +98,14 @@ function HeroSection() {
         </div>
 
         <h1 className="animate-fade-in-up-delay-1 text-5xl sm:text-7xl font-bold tracking-tight leading-[1.1]">
-          One person.<br />
-          <span className="gradient-text">Full company.</span><br />
-          Zero overhead.
+          You build it.<br />
+          <span className="gradient-text">We run it.</span>
         </h1>
 
         <p className="animate-fade-in-up-delay-2 mt-8 text-lg sm:text-xl text-zinc-400 max-w-2xl mx-auto leading-relaxed">
-          AI made building easy. Running a business is still hell. Sovereign
-          gives you the legal, financial, and operational infrastructure of a
-          company &mdash; set up in 60 seconds, run entirely by AI.
+          Building is easy now. Running a business is still hell &mdash;
+          entity formation, banking, contracts, taxes, insurance.
+          Sovereign handles all of it for $49/mo so you can focus on the work.
         </p>
 
         <div className="animate-fade-in-up-delay-3 mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -175,11 +174,11 @@ function ProblemSection() {
       <div className="mx-auto max-w-6xl">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
-            You can build anything.<br />
-            <span className="text-zinc-500">The world won&apos;t let you operate.</span>
+            You signed up to build.<br />
+            <span className="text-zinc-500">Not to do paperwork.</span>
           </h2>
           <p className="mt-4 text-zinc-400 max-w-xl mx-auto">
-            AI collapsed the cost of building. Everything else &mdash; legal, financial, compliance, trust &mdash; is still designed for 20th-century companies.
+            Every solo operator hits the same wall. The work is easy &mdash; the operations eat you alive.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
@@ -204,8 +203,8 @@ function FeaturesSection() {
       <div className="mx-auto max-w-6xl">
         <div className="text-center mb-16">
           <h2 className="text-3xl sm:text-4xl font-bold tracking-tight">
-            Everything a company has.<br />
-            <span className="text-zinc-500">Nothing a company costs.</span>
+            What you actually need to run a business.<br />
+            <span className="text-zinc-500">Without hiring anyone.</span>
           </h2>
         </div>
 
@@ -213,15 +212,15 @@ function FeaturesSection() {
           {/* AI Agents */}
           <div className="rounded-2xl border border-zinc-800/50 bg-zinc-900/20 p-6 sm:p-8">
             <div className="text-xs font-mono text-violet-400 mb-4 uppercase tracking-wider">AI Operations Team</div>
-            <h3 className="text-xl font-semibold mb-4">Six AI agents run your back office</h3>
+            <h3 className="text-xl font-semibold mb-4">What you actually need, handled</h3>
             <div className="space-y-3">
               {([
-                ["Bookkeeper", "Auto-categorizes every transaction. Monthly statements generated."],
-                ["Tax Agent", "Real-time tax estimates across jurisdictions. Files quarterly."],
-                ["Legal Agent", "Reviews contracts, flags risky clauses, drafts counter-proposals."],
-                ["Sales Agent", "Responds to inquiries, generates proposals, follows up."],
-                ["Support Agent", "Handles client questions, triages, escalates only when needed."],
-                ["Procurement Agent", "Negotiates vendor pricing using network-wide leverage."],
+                ["Get paid", "Invoicing, payment collection, multi-currency. Never chase a payment again."],
+                ["Stay compliant", "Entity formation, tax filing, insurance. Automated across jurisdictions."],
+                ["Close deals", "AI-generated contracts — MSAs, NDAs, SOWs. Customized in seconds."],
+                ["Look legitimate", "Trust profile, verified revenue, delivery track record. Enterprise-ready."],
+                ["Save on tools", "Network-wide vendor pricing. Solo rates → enterprise rates."],
+                ["Focus on work", "Everything else runs in the background. Zero admin time."],
               ] as const).map(([name, desc]) => (
                 <div key={name} className="flex gap-3">
                   <div className="mt-1.5 h-2 w-2 rounded-full bg-emerald-500 shrink-0" />
@@ -486,9 +485,9 @@ function WaitlistSection() {
     <section id="waitlist" className="py-20 sm:py-28 px-6 border-t border-zinc-800/30 relative overflow-hidden">
       <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] bg-violet-600/5 rounded-full blur-[100px] pointer-events-none" />
       <div className="mx-auto max-w-2xl text-center relative z-10">
-        <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">The post-corporate era starts here</h2>
+        <h2 className="text-3xl sm:text-4xl font-bold tracking-tight mb-4">Stop doing paperwork. Start doing work.</h2>
         <p className="text-zinc-400 mb-8 max-w-lg mx-auto">
-          Join the first operators building the future of independent work. Early members shape the product and get lifetime pricing.
+          Join the waitlist. We&apos;ll handle entity, banking, contracts, taxes, insurance and trust &mdash; so you don&apos;t have to.
         </p>
 
         {submitted ? (

@@ -13,9 +13,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Sovereign — The Operating System for Independent Operators",
+  title: "Sovereign — We handle the boring parts of running a business",
   description:
-    "One person + AI = full economic entity. Legal, financial, trust, and operational infrastructure for the post-corporate era. Set up in 60 seconds.",
+    "Entity formation, banking, contracts, taxes, insurance, trust — everything after you make your first dollar. $49/mo.",
   keywords: [
     "freelancer infrastructure",
     "solo founder",
@@ -28,9 +28,9 @@ export const metadata: Metadata = {
     "trust profile",
   ],
   openGraph: {
-    title: "Sovereign — One person. Full company. Zero overhead.",
+    title: "Sovereign — You build it. We run it.",
     description:
-      "AI made building easy. Running a business is still hell. Sovereign gives you the legal, financial, and operational infrastructure of a company — set up in 60 seconds, run entirely by AI.",
+      "Building is easy now. Running a business is still hell. Sovereign handles entity formation, banking, contracts, taxes, and insurance for $49/mo.",
     type: "website",
     locale: "en_US",
     siteName: "Sovereign",
