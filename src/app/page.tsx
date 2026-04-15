@@ -443,6 +443,19 @@ function WaitlistSection() {
   const [loading, setLoading] = useState(false);
   const [position, setPosition] = useState(0);
   const [error, setError] = useState("");
+  const [copied, setCopied] = useState(false);
+  const [refSource, setRefSource] = useState("landing");
+
+  // Capture referral source from URL
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const ref = params.get("ref");
+    if (ref) setRefSource(`referral:${ref}`);
+  }, []);
+
+  const shareUrl = typeof window !== "undefined"
+    ? `${window.location.origin}?ref=${encodeURIComponent(email.split("@")[0] || "friend")}`
+    : "";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -453,13 +466,20 @@ function WaitlistSection() {
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, source: "landing" }),
+        body: JSON.stringify({ email, source: refSource }),
       });
       const data = await res.json();
       if (res.ok) { setSubmitted(true); setPosition(data.position); }
       else setError(data.error || "Something went wrong");
     } catch { setError("Network error. Try again."); }
     finally { setLoading(false); }
+  };
+
+  const copyLink = () => {
+    navigator.clipboard.writeText(shareUrl).then(() => {
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    });
   };
 
   return (
@@ -473,8 +493,43 @@ function WaitlistSection() {
 
         {submitted ? (
           <div className="rounded-2xl border border-emerald-500/20 bg-emerald-500/5 p-6 sm:p-8">
-            <div className="text-emerald-400 text-lg font-semibold mb-2">You&apos;re in. #{position} on the list.</div>
-            <p className="text-zinc-400 text-sm">We&apos;ll reach out when we&apos;re ready for you. In the meantime, tell one other independent operator about Sovereign.</p>
+            <div className="text-emerald-400 text-lg font-semibold mb-3">You&apos;re in. #{position} on the list.</div>
+            <p className="text-zinc-400 text-sm mb-6">We&apos;ll send you a welcome email shortly. Founding members get early access + lifetime pricing.</p>
+            
+            <div className="border-t border-emerald-500/10 pt-6">
+              <p className="text-sm text-zinc-300 font-medium mb-3">Share with another operator &mdash; grow the network:</p>
+              <div className="flex gap-2 max-w-sm mx-auto">
+                <input
+                  readOnly
+                  value={shareUrl}
+                  className="flex-1 rounded-lg border border-zinc-700 bg-zinc-900/50 px-3 py-2 text-xs text-zinc-400 font-mono outline-none"
+                />
+                <button
+                  onClick={copyLink}
+                  className="rounded-lg bg-violet-600 px-4 py-2 text-xs font-semibold text-white hover:bg-violet-500 transition-colors shrink-0"
+                >
+                  {copied ? "Copied!" : "Copy"}
+                </button>
+              </div>
+              <div className="flex items-center justify-center gap-4 mt-4">
+                <a
+                  href={`https://twitter.com/intent/tweet?text=${encodeURIComponent("Just joined the Sovereign waitlist — the operating system for independent operators. One person. Full company. Zero overhead.\n\n")}&url=${encodeURIComponent(shareUrl)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-zinc-500 hover:text-violet-400 transition-colors"
+                >
+                  Share on X &rarr;
+                </a>
+                <a
+                  href={`https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(shareUrl)}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-xs text-zinc-500 hover:text-violet-400 transition-colors"
+                >
+                  Share on LinkedIn &rarr;
+                </a>
+              </div>
+            </div>
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">

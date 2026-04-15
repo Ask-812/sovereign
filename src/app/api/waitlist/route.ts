@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { sendWelcomeEmail } from "@/lib/email";
 
 // Use Upstash Redis in production, JSON file locally
 const useRedis = !!(
@@ -69,6 +70,8 @@ export async function POST(req: NextRequest) {
         })
       );
       const total = await redis.scard("waitlist:emails");
+      // Send welcome email (non-blocking)
+      sendWelcomeEmail(email, Number(total)).catch(() => {});
       return NextResponse.json({
         message: "You're in!",
         position: total,
@@ -95,6 +98,7 @@ export async function POST(req: NextRequest) {
 
     await saveWaitlistFile(waitlist);
 
+    sendWelcomeEmail(email, waitlist.length).catch(() => {});
     return NextResponse.json({
       message: "You're in!",
       position: waitlist.length,
