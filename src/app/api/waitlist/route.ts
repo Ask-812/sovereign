@@ -1,24 +1,40 @@
 import { NextRequest, NextResponse } from "next/server";
-import { promises as fs } from "fs";
-import path from "path";
 
-const WAITLIST_FILE = path.join(process.cwd(), "waitlist.json");
+// Use Upstash Redis in production, JSON file locally
+const useRedis = !!(
+  process.env.UPSTASH_REDIS_REST_URL && process.env.UPSTASH_REDIS_REST_TOKEN
+);
 
-async function getWaitlist(): Promise<
+async function getRedis() {
+  const { Redis } = await import("@upstash/redis");
+  return new Redis({
+    url: process.env.UPSTASH_REDIS_REST_URL!,
+    token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+  });
+}
+
+// --- File-based fallback for local dev ---
+async function getWaitlistFile(): Promise<
   { email: string; timestamp: string; source: string }[]
 > {
   try {
-    const data = await fs.readFile(WAITLIST_FILE, "utf-8");
+    const fs = await import("fs/promises");
+    const path = await import("path");
+    const file = path.join(process.cwd(), "waitlist.json");
+    const data = await fs.readFile(file, "utf-8");
     return JSON.parse(data);
   } catch {
     return [];
   }
 }
 
-async function saveWaitlist(
+async function saveWaitlistFile(
   entries: { email: string; timestamp: string; source: string }[]
 ) {
-  await fs.writeFile(WAITLIST_FILE, JSON.stringify(entries, null, 2));
+  const fs = await import("fs/promises");
+  const path = await import("path");
+  const file = path.join(process.cwd(), "waitlist.json");
+  await fs.writeFile(file, JSON.stringify(entries, null, 2));
 }
 
 export async function POST(req: NextRequest) {
@@ -33,7 +49,35 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const waitlist = await getWaitlist();
+    if (useRedis) {
+      const redis = await getRedis();
+      const exists = await redis.sismember("waitlist:emails", email);
+      if (exists) {
+        const total = await redis.scard("waitlist:emails");
+        return NextResponse.json({
+          message: "You're already on the list!",
+          total,
+        });
+      }
+      await redis.sadd("waitlist:emails", email);
+      await redis.lpush(
+        "waitlist:entries",
+        JSON.stringify({
+          email,
+          timestamp: new Date().toISOString(),
+          source: body.source || "landing",
+        })
+      );
+      const total = await redis.scard("waitlist:emails");
+      return NextResponse.json({
+        message: "You're in!",
+        position: total,
+        total,
+      });
+    }
+
+    // Local fallback
+    const waitlist = await getWaitlistFile();
 
     if (waitlist.some((entry) => entry.email === email)) {
       return NextResponse.json({
@@ -49,7 +93,7 @@ export async function POST(req: NextRequest) {
       source: body.source || "landing",
     });
 
-    await saveWaitlist(waitlist);
+    await saveWaitlistFile(waitlist);
 
     return NextResponse.json({
       message: "You're in!",
@@ -65,6 +109,15 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET() {
-  const waitlist = await getWaitlist();
-  return NextResponse.json({ total: waitlist.length });
+  try {
+    if (useRedis) {
+      const redis = await getRedis();
+      const total = await redis.scard("waitlist:emails");
+      return NextResponse.json({ total });
+    }
+    const waitlist = await getWaitlistFile();
+    return NextResponse.json({ total: waitlist.length });
+  } catch {
+    return NextResponse.json({ total: 0 });
+  }
 }
